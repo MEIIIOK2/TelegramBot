@@ -64,14 +64,15 @@ def send_message(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def iq_callback(query):
-   data = query.data
+    data = query.data
 
-   if data.startswith('return-'):
-       chat_id = int(data[7:])
+    if data.startswith('return-'):
+        chat_id = int(data[7:])
 
-
-       bot.send_message(chat_id,f'{query.from_user.first_name} Выполнил задание')
-       bot.send_message(query.from_user.id,"Спасибо!")
+        bot.edit_message_reply_markup(query.from_user.id,query.message.id)
+        print(query)
+        bot.send_message(chat_id,f'{query.from_user.first_name} Выполнил задание')
+        bot.send_message(query.from_user.id,"Ваш ответ принят")
 
 
 
