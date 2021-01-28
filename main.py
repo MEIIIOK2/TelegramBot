@@ -65,7 +65,11 @@ def send_message(message):
                         realusers.append(user)
                     except:
                         pass
-            taskslist.append([admin_id,realusers])
+            msg_id = bot.send_message(admin_id,"Скоро здесь появится статистика выполнения заданий")
+            print(msg_id)
+            msg_id = msg_id.message_id
+            print(msg_id)
+            taskslist.append([admin_id,realusers,msg_id])
 
         else:
             bot.reply_to(message,'Вы не зарегистрированы. Используйте команду /register')
@@ -79,7 +83,8 @@ def iq_callback(query):
 
 
         admin_id = int(taskslist[taskid][0])
-
+        msg_id = taskslist[taskid][2]
+        print(taskslist)
         userslist=taskslist[taskid][1]
 
         thisuser=query.from_user.id
@@ -98,8 +103,10 @@ def iq_callback(query):
             pickle.dump(taskslist,f)
         bot.edit_message_reply_markup(query.from_user.id,query.message.id)
         print(len(taskslist))
+        print(msg_id)
+        #msg = bot.send_message(admin_id,done+notdone)
+        bot.edit_message_text(done+notdone,admin_id,msg_id)
 
-        bot.send_message(admin_id,done+notdone)
         bot.send_message(query.from_user.id,"Ваш ответ принят")
 
 bot.polling()
