@@ -19,13 +19,13 @@ def send_message(message):
     markup = types.InlineKeyboardMarkup()
     itembtndone = types.InlineKeyboardButton('Написать', url='telegram.me/Notification_handler_bot')
     markup.add(itembtndone)
-    if message.text =='/help':
+    if message.text =='/help'.lower():
         bot.reply_to(message,'Для того чтобы начать пользоваться ботом:\n'
                              '1)Напишите в чат команду /register\n'
                              '2)Перейдите по ссылке в диалог с ботом и нажмите "Start"\n'
                              'Для создания объявления введите /i а затем текст объявления\n'
                              'ВАЖНО: чтобы бот смог вам написать, ЗАПУСТИТЕ ЕГО (2 пункт)')
-    if message.text =='/register':
+    if message.text =='/register'.lower():
         chat_id = message.chat.id
         user_id = message.from_user.id
         user_name = message.from_user.first_name
@@ -42,7 +42,7 @@ def send_message(message):
             print(usr)
 
     msg = str(message.text)
-    if msg.startswith('/i'):
+    if msg.startswith('/i'.lower()):
         sender_id = message.from_user.id
         inlist = False
         for user in users:
